@@ -2,69 +2,10 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Hệ thống Ôn tập Tin học</title>
-  <style>
-    body { font-family: Arial; background:#f5f7fb; }
-    .box { width:800px; margin:40px auto; background:#fff; padding:20px; border-radius:8px }
-    h2 { margin-top:0 }
-    details { margin-bottom:10px }
-    button { padding:10px 16px; font-size:16px }
-    .tabs { margin-top:20px }
-    .tab { border:1px solid #ddd; padding:12px; margin-top:10px }
-  </style>
+  <title>TEST GITHUB PAGES</title>
 </head>
 <body>
-
-<div class="box">
-  <h2>Hệ thống Ôn tập Tin học 10</h2>
-
-  <details open>
-    <summary><b>CHỦ ĐỀ A: MÁY TÍNH VÀ XÃ HỘI TRI THỨC</b></summary>
-    <label><input type="checkbox" value="[Tin 10] Bài 1. Dữ liệu, thông tin"> Bài 1</label><br>
-    <label><input type="checkbox" value="[Tin 10] Bài 2. Sự ưu việt của máy tính"> Bài 2</label>
-  </details>
-
-  <details>
-    <summary><b>CHỦ ĐỀ B: MẠNG MÁY TÍNH VÀ INTERNET</b></summary>
-    <label><input type="checkbox" value="[Tin 10] Bài 5. Mạng máy tính"> Bài 5</label>
-  </details>
-
-  <button onclick="start()">Bắt đầu học tập</button>
-
-  <div class="tabs">
-    <div class="tab" id="result"></div>
-  </div>
-</div>
-
-<script>
-async function start(){
-  const lessons = [...document.querySelectorAll("input:checked")].map(i=>i.value);
-  if(lessons.length === 0){ alert("Chọn ít nhất 1 bài"); return; }
-
-  const prompt = `
-Bạn là trợ lý ôn thi TN THPT Tin học 2025 (ICT).
-Tạo tài liệu ôn tập cho các bài sau:
-${lessons.join(", ")}
-
-Trình bày theo 3 TAB:
-TAB 1: Lý thuyết
-TAB 2: Câu hỏi
-TAB 3: Phân tích
-`;
-
-  const res = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=YOUR_API_KEY",{
-    method:"POST",
-    headers:{ "Content-Type":"application/json" },
-    body: JSON.stringify({
-      contents:[{parts:[{text:prompt}]}]
-    })
-  });
-
-  const data = await res.json();
-  document.getElementById("result").innerText =
-    data.candidates[0].content.parts[0].text;
-}
-</script>
-
+  <h1>GitHub Pages HOẠT ĐỘNG</h1>
+  <p>Nếu bạn thấy trang này, Pages đã chạy đúng.</p>
 </body>
 </html>
