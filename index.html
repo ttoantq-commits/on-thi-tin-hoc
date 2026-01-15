@@ -339,12 +339,28 @@ function switchTab(t){
 }
 
 function renderTheory(list){
-    let html="<h2>Tóm tắt kiến thức</h2>";
-    list.forEach(b=>{
-        html+=`<h3>${b}</h3><p>Nội dung trọng tâm, khái niệm và ví dụ minh họa.</p>`;
+    document.getElementById('theory').innerHTML = "<p>Đang tạo nội dung ôn tập...</p>";
+
+    fetch("https://script.google.com/macros/s/AKfycbxsjtxVm1K_SHkAGNRxeCicjpiSPmedCi9k8SZvqeJoSlu2qMLjAS7_dCOLEa-jEz5uQg/exec", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            type: "theory",
+            topics: list
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        document.getElementById('theory').innerHTML =
+            "<h2>Tóm tắt kiến thức</h2><div>" +
+            data.content.replace(/\n/g,"<br>") +
+            "</div>";
+    })
+    .catch(err => {
+        document.getElementById('theory').innerHTML = "Lỗi tạo nội dung.";
     });
-    document.getElementById('theory').innerHTML=html;
 }
+
 
 function renderPractice(list){
     let html="<h2>Luyện tập</h2>";
@@ -362,3 +378,4 @@ function renderAdvice(list){
 
 </body>
 </html>
+
