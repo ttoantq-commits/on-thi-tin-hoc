@@ -336,15 +336,19 @@ function renderPractice(list) {
     
     fetch(SCRIPT_URL, {
         method: "POST",
-        mode: "no-cors", // Thêm mode này nếu vẫn bị chặn, nhưng tốt nhất là dùng cách dưới:
-        headers: {
-            "Content-Type": "text/plain", // Đổi từ application/json sang text/plain
-        },
+        // Chuyển sang text/plain để tránh lỗi Preflight (CORS)
+        headers: { "Content-Type": "text/plain" }, 
         body: JSON.stringify({ type: "practice", topics: list })
     })
-    .then(r => r.json()) // Lưu ý: no-cors sẽ không cho phép đọc r.json()
-    // Cách tốt nhất: Chuyển toàn bộ renderPractice sang dùng GET giống như renderTheory
-    // hoặc sử dụng thư viện như Google's chính thống nếu có thể.
+    .then(r => r.json())
+    .then(d => {
+        document.getElementById('practice').innerHTML =
+            "<h2>Câu hỏi ôn tập</h2>" + d.content.replace(/\n/g, "<br>");
+    })
+    .catch((err) => {
+        console.error("Lỗi:", err);
+        document.getElementById('practice').innerHTML = "Lỗi tải câu hỏi";
+    });
 }
 
 function renderAdvice(){
@@ -355,4 +359,5 @@ function renderAdvice(){
 
 </body>
 </html>
+
 
