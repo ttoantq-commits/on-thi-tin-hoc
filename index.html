@@ -291,23 +291,42 @@ function selectAll(btn){
     updateCount();
 }
 
-function startStudy(){
+function startStudy() {
     const list = [];
-    document.querySelectorAll('input:checked').forEach(cb=>{
-        list.push(cb.parentElement.textContent.trim());
+    // 1. Lấy tất cả các checkbox đã được tích chọn
+    const selectedCheckboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+
+    selectedCheckboxes.forEach(cb => {
+        // Lấy nội dung văn bản bên trong thẻ label (tên bài học)
+        // Dùng innerText để lấy nội dung text thuần và loại bỏ khoảng trắng thừa
+        let topicName = cb.parentElement.innerText || cb.parentElement.textContent;
+        list.push(topicName.trim());
     });
-    if(list.length === 0){
-        alert("Chưa chọn bài học");
+
+    // 2. Kiểm tra nếu danh sách trống (người dùng chưa chọn bài nào)
+    if (list.length === 0) {
+        alert("⚠️ Vui lòng chọn ít nhất một bài học để bắt đầu!");
         return;
     }
-    document.querySelector('.container').style.display="none";
-    document.querySelector('.bottom-bar').style.display="none";
-    document.getElementById('studyScreen').style.display="block";
-    renderTheory(list);
-    renderPractice(list);
-    renderAdvice();
-}
 
+    // 3. Hiệu ứng chuyển đổi giao diện
+    // Ẩn danh sách chọn bài và thanh bar phía dưới
+    document.querySelector('.container').style.display = "none";
+    document.querySelector('.bottom-bar').style.display = "none";
+    
+    // Hiện màn hình học tập (Study Screen)
+    const studyScreen = document.getElementById('studyScreen');
+    studyScreen.style.display = "block";
+
+    // Cuộn màn hình lên đầu trang để người dùng bắt đầu đọc từ Lý thuyết
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // 4. Kích hoạt tiến trình lấy dữ liệu từ AI
+    // Truyền danh sách các bài học đã chọn vào các hàm xử lý
+    renderTheory(list);   // Gọi API lấy tóm tắt lý thuyết (GET)
+    renderPractice(list); // Gọi API tạo câu hỏi trắc nghiệm (POST)
+    renderAdvice();       // Hiển thị lời khuyên học tập
+}
 function switchTab(event, t){
     document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
     document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
@@ -359,5 +378,6 @@ function renderAdvice(){
 
 </body>
 </html>
+
 
 
