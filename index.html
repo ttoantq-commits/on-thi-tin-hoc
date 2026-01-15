@@ -363,12 +363,28 @@ function renderTheory(list){
 
 
 function renderPractice(list){
-    let html="<h2>Luyện tập</h2>";
-    list.forEach(b=>{
-        html+=`<p>${b}: Câu hỏi trắc nghiệm và bài tập vận dụng.</p>`;
+    document.getElementById('practice').innerHTML = "<p>Đang tạo câu hỏi ôn tập...</p>";
+
+    fetch("https://script.google.com/macros/s/AKfycbxsjtxVm1K_SHkAGNRxeCicjpiSPmedCi9k8SZvqeJoSlu2qMLjAS7_dCOLEa-jEz5uQg/exec", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            type: "practice",
+            topics: list
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        document.getElementById('practice').innerHTML =
+            "<h2>Câu hỏi ôn tập</h2><div>" +
+            data.content.replace(/\n/g,"<br>") +
+            "</div>";
+    })
+    .catch(err => {
+        document.getElementById('practice').innerHTML = "Lỗi tạo câu hỏi.";
     });
-    document.getElementById('practice').innerHTML=html;
 }
+
 
 function renderAdvice(list){
     document.getElementById('advice').innerHTML=
@@ -378,4 +394,5 @@ function renderAdvice(list){
 
 </body>
 </html>
+
 
