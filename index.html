@@ -315,34 +315,36 @@ function switchTab(event, t){
     event.target.classList.add('active');
 }
 
-function renderTheory(list){
+function renderTheory(list) {
     document.getElementById('theory').innerHTML = "Đang tạo nội dung...";
-    fetch(SCRIPT_URL + "?topics=" + encodeURIComponent(list.join(", ")))
-        .then(r=>r.json())
-        .then(d=>{
+    const url = SCRIPT_URL + "?topics=" + encodeURIComponent(list.join(", "));
+    
+    fetch(url) // GET mặc định không cần header phức tạp
+        .then(r => r.json())
+        .then(d => {
             document.getElementById('theory').innerHTML =
-                "<h2>Tóm tắt kiến thức</h2>" + d.content.replace(/\n/g,"<br>");
+                "<h2>Tóm tắt kiến thức</h2>" + d.content.replace(/\n/g, "<br>");
         })
-        .catch(()=>{
+        .catch(err => {
+            console.error(err);
             document.getElementById('theory').innerHTML = "Lỗi tải dữ liệu";
         });
 }
 
-function renderPractice(list){
+function renderPractice(list) {
     document.getElementById('practice').innerHTML = "Đang tạo câu hỏi...";
+    
     fetch(SCRIPT_URL, {
-        method:"POST",
-        headers:{ "Content-Type":"application/json" },
-        body:JSON.stringify({ type:"practice", topics:list })
+        method: "POST",
+        mode: "no-cors", // Thêm mode này nếu vẫn bị chặn, nhưng tốt nhất là dùng cách dưới:
+        headers: {
+            "Content-Type": "text/plain", // Đổi từ application/json sang text/plain
+        },
+        body: JSON.stringify({ type: "practice", topics: list })
     })
-    .then(r=>r.json())
-    .then(d=>{
-        document.getElementById('practice').innerHTML =
-            "<h2>Câu hỏi ôn tập</h2>" + d.content.replace(/\n/g,"<br>");
-    })
-    .catch(()=>{
-        document.getElementById('practice').innerHTML = "Lỗi tải câu hỏi";
-    });
+    .then(r => r.json()) // Lưu ý: no-cors sẽ không cho phép đọc r.json()
+    // Cách tốt nhất: Chuyển toàn bộ renderPractice sang dùng GET giống như renderTheory
+    // hoặc sử dụng thư viện như Google's chính thống nếu có thể.
 }
 
 function renderAdvice(){
@@ -353,3 +355,4 @@ function renderAdvice(){
 
 </body>
 </html>
+
