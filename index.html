@@ -9,21 +9,36 @@ body{
     margin:0;
     font-family: Arial, Helvetica, sans-serif;
     background:#f5f7fb;
+    padding-top:70px;
+    padding-bottom:90px;
 }
+
+/* ===== TOP BAR ===== */
 header{
-    background:#fff;
-    padding:16px 24px;
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    background:#ffffff;
+    padding:14px 24px;
     border-bottom:1px solid #e5e7eb;
+    z-index:1000;
+}
+header strong{
+    font-size:18px;
 }
 header .subtitle{
     font-size:12px;
     color:#666;
 }
+
+/* ===== MAIN ===== */
 .container{
     max-width:1100px;
     margin:20px auto;
     padding:0 16px;
 }
+
 .search-box{
     display:flex;
     gap:12px;
@@ -44,6 +59,7 @@ header .subtitle{
     border-radius:10px;
     font-weight:bold;
 }
+
 .topic{
     background:#fff;
     border-radius:14px;
@@ -60,6 +76,7 @@ header .subtitle{
     padding:18px;
     border-top:1px solid #eee;
 }
+
 .grade{
     margin-bottom:18px;
 }
@@ -77,12 +94,15 @@ header .subtitle{
     cursor:pointer;
     font-size:12px;
 }
+
 label{
     display:block;
     margin:6px 0;
     cursor:pointer;
 }
-    .bottom-bar{
+
+/* ===== BOTTOM BAR ===== */
+.bottom-bar{
     position:fixed;
     left:0;
     right:0;
@@ -94,7 +114,7 @@ label{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    z-index:999;
+    z-index:1000;
 }
 
 .bottom-info{
@@ -124,7 +144,6 @@ label{
     font-weight:bold;
     cursor:pointer;
 }
-
 </style>
 </head>
 
@@ -175,41 +194,8 @@ label{
 </div>
 </div>
 
-<div class="topic">
-<div class="topic-header" onclick="toggleTopic(this)">CHỦ ĐỀ F – Giải quyết vấn đề với sự trợ giúp của máy tính</div>
-<div class="topic-content">
-
-<div class="grade">
-<div class="grade-title">LỚP 10 <button onclick="selectAll(this)">TẤT CẢ</button></div>
-<label><input type="checkbox"> Lập trình Python: Biến và kiểu dữ liệu</label>
-<label><input type="checkbox"> Câu lệnh rẽ nhánh (if-else)</label>
-<label><input type="checkbox"> Câu lệnh lặp (for, while)</label>
-<label><input type="checkbox"> Danh sách (List)</label>
-<label><input type="checkbox"> Hàm và thư viện</label>
 </div>
 
-<div class="grade">
-<div class="grade-title">LỚP 11 <button onclick="selectAll(this)">TẤT CẢ</button></div>
-<label><input type="checkbox"> Cơ sở dữ liệu và hệ quản trị CSDL</label>
-<label><input type="checkbox"> Thiết kế bảng và khóa chính</label>
-<label><input type="checkbox"> Liên kết bảng và khóa ngoại</label>
-<label><input type="checkbox"> Ngôn ngữ SQL cơ bản</label>
-<label><input type="checkbox"> Truy vấn và báo cáo</label>
-</div>
-
-<div class="grade">
-<div class="grade-title">LỚP 12 <button onclick="selectAll(this)">TẤT CẢ</button></div>
-<label><input type="checkbox"> Cấu trúc trang Web HTML</label>
-<label><input type="checkbox"> Định dạng văn bản và bảng</label>
-<label><input type="checkbox"> Biểu mẫu và siêu liên kết</label>
-<label><input type="checkbox"> Định dạng Web với CSS</label>
-<label><input type="checkbox"> Bố cục Flexbox và Grid</label>
-</div>
-
-</div>
-</div>
-
-</div>
 <div class="bottom-bar">
     <div class="bottom-info">
         <div class="title">LỘ TRÌNH SẴN SÀNG</div>
@@ -221,13 +207,16 @@ label{
 <script>
 const checkboxes = document.querySelectorAll('input[type="checkbox"]');
 const countSpan = document.getElementById('selectedCount');
+const bottomCount = document.getElementById('bottomCount');
 const searchInput = document.getElementById('searchInput');
 
 function updateCount(){
     let count = 0;
     checkboxes.forEach(cb => { if(cb.checked) count++; });
     countSpan.textContent = count;
+    bottomCount.textContent = count;
 }
+
 checkboxes.forEach(cb => cb.addEventListener('change', updateCount));
 
 function toggleTopic(header){
@@ -249,14 +238,6 @@ searchInput.addEventListener('input', function(){
         lb.style.display = lb.textContent.toLowerCase().includes(key) ? 'block' : 'none';
     });
 });
-    const bottomCount = document.getElementById('bottomCount');
-
-function updateCount(){
-    let count = 0;
-    checkboxes.forEach(cb => { if(cb.checked) count++; });
-    countSpan.textContent = count;
-    bottomCount.textContent = count;
-}
 
 function startStudy(){
     if(parseInt(bottomCount.textContent) === 0){
@@ -265,9 +246,7 @@ function startStudy(){
     }
     alert("Đã nạp " + bottomCount.textContent + " bài học. Sẵn sàng ôn tập!");
 }
-
 </script>
 
 </body>
 </html>
-
