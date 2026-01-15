@@ -1,14 +1,205 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <title>TEST GITHUB PAGES</title>
+<meta charset="UTF-8">
+<title>Trợ lý ôn thi TN THPT môn Tin học</title>
+
+<style>
+body{
+    margin:0;
+    font-family: Arial, Helvetica, sans-serif;
+    background:#f5f7fb;
+}
+header{
+    background:#fff;
+    padding:16px 24px;
+    border-bottom:1px solid #e5e7eb;
+}
+header .subtitle{
+    font-size:12px;
+    color:#666;
+}
+.container{
+    max-width:1100px;
+    margin:20px auto;
+    padding:0 16px;
+}
+.search-box{
+    display:flex;
+    gap:12px;
+    align-items:center;
+    margin-bottom:20px;
+}
+.search-box input{
+    flex:1;
+    padding:12px;
+    border-radius:10px;
+    border:1px solid #ddd;
+    font-size:14px;
+}
+.counter{
+    background:#eaf1ff;
+    color:#2563eb;
+    padding:10px 16px;
+    border-radius:10px;
+    font-weight:bold;
+}
+.topic{
+    background:#fff;
+    border-radius:14px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.05);
+    margin-bottom:18px;
+}
+.topic-header{
+    padding:18px;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+}
+.topic-content{
+    padding:18px;
+    border-top:1px solid #eee;
+}
+.grade{
+    margin-bottom:18px;
+}
+.grade-title{
+    font-weight:bold;
+    margin-bottom:8px;
+}
+.grade-title button{
+    margin-left:10px;
+    padding:4px 10px;
+    border:none;
+    border-radius:8px;
+    background:#eaf1ff;
+    color:#2563eb;
+    cursor:pointer;
+    font-size:12px;
+}
+label{
+    display:block;
+    margin:6px 0;
+    cursor:pointer;
+}
+</style>
 </head>
+
 <body>
-  <h1>GitHub Pages HOẠT ĐỘNG</h1>
-  <p>Nếu bạn thấy trang này, Pages đã chạy đúng.</p>
+
+<header>
+    <strong>Trợ lý ôn thi TN THPT môn Tin học</strong>
+    <div class="subtitle">ÔN THI TỐT NGHIỆP</div>
+</header>
+
+<div class="container">
+
+<div class="search-box">
+    <input type="text" id="searchInput" placeholder="Tìm bài học (Python, Excel, AI...)">
+    <div class="counter">ĐÃ CHỌN <span id="selectedCount">0</span></div>
+</div>
+
+<div class="topic">
+<div class="topic-header" onclick="toggleTopic(this)">CHỦ ĐỀ A – Máy tính và xã hội tri thức</div>
+<div class="topic-content">
+
+<div class="grade">
+<div class="grade-title">LỚP 10 <button onclick="selectAll(this)">TẤT CẢ</button></div>
+<label><input type="checkbox"> Dữ liệu, thông tin và xử lý thông tin</label>
+<label><input type="checkbox"> Lưu trữ, trao đổi và bảo mật thông tin</label>
+<label><input type="checkbox"> Sự ưu việt của máy tính và thành tựu Tin học</label>
+<label><input type="checkbox"> Thực hành sử dụng thiết bị số</label>
+<label><input type="checkbox"> Tin học trong phát triển kinh tế – xã hội</label>
+</div>
+
+<div class="grade">
+<div class="grade-title">LỚP 11 <button onclick="selectAll(this)">TẤT CẢ</button></div>
+<label><input type="checkbox"> Bên trong máy tính</label>
+<label><input type="checkbox"> Khám phá thế giới thiết bị số thông minh</label>
+<label><input type="checkbox"> Khái quát về hệ điều hành</label>
+<label><input type="checkbox"> Hệ điều hành cho thiết bị di động</label>
+<label><input type="checkbox"> Phần mềm ứng dụng và dịch vụ phần mềm</label>
+</div>
+
+<div class="grade">
+<div class="grade-title">LỚP 12 <button onclick="selectAll(this)">TẤT CẢ</button></div>
+<label><input type="checkbox"> Giới thiệu về trí tuệ nhân tạo (AI)</label>
+<label><input type="checkbox"> Thành tựu và ứng dụng của AI</label>
+<label><input type="checkbox"> Quan niệm về AI và tương lai</label>
+<label><input type="checkbox"> Cảnh báo về sự lạm dụng AI</label>
+</div>
+
+</div>
+</div>
+
+<div class="topic">
+<div class="topic-header" onclick="toggleTopic(this)">CHỦ ĐỀ F – Giải quyết vấn đề với sự trợ giúp của máy tính</div>
+<div class="topic-content">
+
+<div class="grade">
+<div class="grade-title">LỚP 10 <button onclick="selectAll(this)">TẤT CẢ</button></div>
+<label><input type="checkbox"> Lập trình Python: Biến và kiểu dữ liệu</label>
+<label><input type="checkbox"> Câu lệnh rẽ nhánh (if-else)</label>
+<label><input type="checkbox"> Câu lệnh lặp (for, while)</label>
+<label><input type="checkbox"> Danh sách (List)</label>
+<label><input type="checkbox"> Hàm và thư viện</label>
+</div>
+
+<div class="grade">
+<div class="grade-title">LỚP 11 <button onclick="selectAll(this)">TẤT CẢ</button></div>
+<label><input type="checkbox"> Cơ sở dữ liệu và hệ quản trị CSDL</label>
+<label><input type="checkbox"> Thiết kế bảng và khóa chính</label>
+<label><input type="checkbox"> Liên kết bảng và khóa ngoại</label>
+<label><input type="checkbox"> Ngôn ngữ SQL cơ bản</label>
+<label><input type="checkbox"> Truy vấn và báo cáo</label>
+</div>
+
+<div class="grade">
+<div class="grade-title">LỚP 12 <button onclick="selectAll(this)">TẤT CẢ</button></div>
+<label><input type="checkbox"> Cấu trúc trang Web HTML</label>
+<label><input type="checkbox"> Định dạng văn bản và bảng</label>
+<label><input type="checkbox"> Biểu mẫu và siêu liên kết</label>
+<label><input type="checkbox"> Định dạng Web với CSS</label>
+<label><input type="checkbox"> Bố cục Flexbox và Grid</label>
+</div>
+
+</div>
+</div>
+
+</div>
+
+<script>
+const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+const countSpan = document.getElementById('selectedCount');
+const searchInput = document.getElementById('searchInput');
+
+function updateCount(){
+    let count = 0;
+    checkboxes.forEach(cb => { if(cb.checked) count++; });
+    countSpan.textContent = count;
+}
+checkboxes.forEach(cb => cb.addEventListener('change', updateCount));
+
+function toggleTopic(header){
+    const content = header.nextElementSibling;
+    content.style.display = content.style.display === 'none' ? 'block' : 'none';
+}
+
+function selectAll(btn){
+    const grade = btn.closest('.grade');
+    const boxes = grade.querySelectorAll('input[type="checkbox"]');
+    const allChecked = Array.from(boxes).every(cb => cb.checked);
+    boxes.forEach(cb => cb.checked = !allChecked);
+    updateCount();
+}
+
+searchInput.addEventListener('input', function(){
+    const key = this.value.toLowerCase();
+    document.querySelectorAll('label').forEach(lb=>{
+        lb.style.display = lb.textContent.toLowerCase().includes(key) ? 'block' : 'none';
+    });
+});
+</script>
+
 </body>
 </html>
-
-<!-- trigger rebuild -->
-
