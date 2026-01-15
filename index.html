@@ -198,72 +198,45 @@ label{
 <div class="container">
 
 <div class="search-box">
-<input type="text" id="searchInput" placeholder="Tìm bài học (Python, Excel, AI...)">
+<input type="text" placeholder="Tìm bài học (Python, Excel, AI...)">
 <div class="counter">ĐÃ CHỌN <span id="selectedCount">0</span></div>
 </div>
 
-<!-- CHỦ ĐỀ A -->
 <div class="topic">
 <div class="topic-header" onclick="toggleTopic(this)">CHỦ ĐỀ A – Máy tính và xã hội tri thức</div>
 <div class="topic-content">
+
 <div class="grade">
 <div class="grade-title">LỚP 10 <button onclick="selectAll(this)">TẤT CẢ</button></div>
 <label><input type="checkbox"> Dữ liệu, thông tin và xử lý thông tin</label>
 <label><input type="checkbox"> Lưu trữ, trao đổi và bảo mật thông tin</label>
-<label><input type="checkbox"> Sự ưu việt của máy tính và thành tựu Tin học</label>
-<label><input type="checkbox"> Thực hành sử dụng thiết bị số</label>
-<label><input type="checkbox"> Tin học trong phát triển kinh tế – xã hội</label>
-</div>
-
-<div class="grade">
-<div class="grade-title">LỚP 11 <button onclick="selectAll(this)">TẤT CẢ</button></div>
-<label><input type="checkbox"> Bên trong máy tính</label>
-<label><input type="checkbox"> Khám phá thế giới thiết bị số thông minh</label>
-<label><input type="checkbox"> Khái quát về hệ điều hành</label>
-<label><input type="checkbox"> Hệ điều hành cho thiết bị di động</label>
-<label><input type="checkbox"> Phần mềm ứng dụng và dịch vụ phần mềm</label>
 </div>
 
 <div class="grade">
 <div class="grade-title">LỚP 12 <button onclick="selectAll(this)">TẤT CẢ</button></div>
 <label><input type="checkbox"> Giới thiệu về trí tuệ nhân tạo</label>
-<label><input type="checkbox"> Thành tựu và ứng dụng của AI</label>
-<label><input type="checkbox"> Quan niệm về AI và tương lai</label>
-<label><input type="checkbox"> Cảnh báo về sự lạm dụng AI</label>
+<label><input type="checkbox"> Ứng dụng AI</label>
 </div>
+
 </div>
 </div>
 
-<!-- CHỦ ĐỀ F -->
 <div class="topic">
-<div class="topic-header" onclick="toggleTopic(this)">CHỦ ĐỀ F – Giải quyết vấn đề với sự trợ giúp của máy tính</div>
+<div class="topic-header" onclick="toggleTopic(this)">CHỦ ĐỀ F – Giải quyết vấn đề với máy tính</div>
 <div class="topic-content">
+
 <div class="grade">
 <div class="grade-title">LỚP 10 <button onclick="selectAll(this)">TẤT CẢ</button></div>
 <label><input type="checkbox"> Python: Biến và kiểu dữ liệu</label>
-<label><input type="checkbox"> Câu lệnh rẽ nhánh</label>
 <label><input type="checkbox"> Câu lệnh lặp</label>
-<label><input type="checkbox"> Danh sách</label>
-<label><input type="checkbox"> Hàm và thư viện</label>
-</div>
-
-<div class="grade">
-<div class="grade-title">LỚP 11 <button onclick="selectAll(this)">TẤT CẢ</button></div>
-<label><input type="checkbox"> Cơ sở dữ liệu và hệ quản trị CSDL</label>
-<label><input type="checkbox"> Thiết kế bảng và khóa chính</label>
-<label><input type="checkbox"> Liên kết bảng và khóa ngoại</label>
-<label><input type="checkbox"> Ngôn ngữ SQL cơ bản</label>
-<label><input type="checkbox"> Truy vấn và báo cáo</label>
 </div>
 
 <div class="grade">
 <div class="grade-title">LỚP 12 <button onclick="selectAll(this)">TẤT CẢ</button></div>
-<label><input type="checkbox"> HTML: Cấu trúc trang Web</label>
-<label><input type="checkbox"> Định dạng văn bản và bảng</label>
-<label><input type="checkbox"> Biểu mẫu và siêu liên kết</label>
-<label><input type="checkbox"> CSS: Định dạng giao diện</label>
-<label><input type="checkbox"> Flexbox và Grid</label>
+<label><input type="checkbox"> HTML cơ bản</label>
+<label><input type="checkbox"> CSS cơ bản</label>
 </div>
+
 </div>
 </div>
 
@@ -272,17 +245,16 @@ label{
 <div class="bottom-bar">
 <div class="bottom-info">
 <strong>LỘ TRÌNH SẴN SÀNG</strong><br>
-<span id="bottomCount">0</span> bài học đã được nạp
+<span id="bottomCount">0</span> bài học
 </div>
 <button class="start-btn" onclick="startStudy()">⚡ BẮT ĐẦU ÔN TẬP</button>
 </div>
 
-<!-- STUDY SCREEN -->
 <div id="studyScreen">
 <div class="study-header">
-<button class="tab active" onclick="switchTab('theory')">📘 Lý thuyết</button>
-<button class="tab" onclick="switchTab('practice')">✍️ Luyện tập</button>
-<button class="tab" onclick="switchTab('advice')">🤖 Lời khuyên AI</button>
+<button class="tab active" onclick="switchTab(event,'theory')">📘 Lý thuyết</button>
+<button class="tab" onclick="switchTab(event,'practice')">✍️ Luyện tập</button>
+<button class="tab" onclick="switchTab(event,'advice')">🤖 Lời khuyên AI</button>
 </div>
 
 <div class="study-content">
@@ -293,45 +265,50 @@ label{
 </div>
 
 <script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxsjtxVm1K_SHkAGNRxeCicjpiSPmedCi9k8SZvqeJoSlu2qMLjAS7_dCOLEa-jEz5uQg/exec";
+
 const checkboxes = document.querySelectorAll('input[type="checkbox"]');
 const countSpan = document.getElementById('selectedCount');
 const bottomCount = document.getElementById('bottomCount');
 
 function updateCount(){
     let c = 0;
-    checkboxes.forEach(cb=>{ if(cb.checked) c++; });
+    checkboxes.forEach(cb => cb.checked && c++);
     countSpan.textContent = c;
     bottomCount.textContent = c;
 }
-checkboxes.forEach(cb=>cb.addEventListener('change',updateCount));
+checkboxes.forEach(cb => cb.addEventListener('change', updateCount));
 
 function toggleTopic(h){
     const c = h.nextElementSibling;
-    c.style.display = c.style.display==="none"?"block":"none";
+    c.style.display = c.style.display === "none" ? "block" : "none";
 }
 
 function selectAll(btn){
     const boxes = btn.closest('.grade').querySelectorAll('input');
-    const all = [...boxes].every(b=>b.checked);
-    boxes.forEach(b=>b.checked=!all);
+    const allChecked = [...boxes].every(b => b.checked);
+    boxes.forEach(b => b.checked = !allChecked);
     updateCount();
 }
 
 function startStudy(){
-    const list=[];
+    const list = [];
     document.querySelectorAll('input:checked').forEach(cb=>{
         list.push(cb.parentElement.textContent.trim());
     });
-    if(list.length===0){alert("Chưa chọn bài học");return;}
+    if(list.length === 0){
+        alert("Chưa chọn bài học");
+        return;
+    }
     document.querySelector('.container').style.display="none";
     document.querySelector('.bottom-bar').style.display="none";
     document.getElementById('studyScreen').style.display="block";
     renderTheory(list);
     renderPractice(list);
-    renderAdvice(list);
+    renderAdvice();
 }
 
-function switchTab(t){
+function switchTab(event, t){
     document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
     document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
     document.getElementById(t).classList.add('active');
@@ -339,58 +316,40 @@ function switchTab(t){
 }
 
 function renderTheory(list){
-    document.getElementById('theory').innerHTML = "<p>Đang tạo nội dung ôn tập...</p>";
-
-    const url = "https://script.google.com/macros/s/AKfycbxsjtxVm1K_SHkAGNRxeCicjpiSPmedCi9k8SZvqeJoSlu2qMLjAS7_dCOLEa-jEz5uQg/exec"
-        + "?topics=" + encodeURIComponent(list.join(", "));
-
-    fetch(url)
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById('theory').innerHTML =
-          "<h2>Tóm tắt kiến thức</h2><div>" +
-          data.content.replace(/\n/g,"<br>") +
-          "</div>";
-      })
-      .catch(() => {
-        document.getElementById('theory').innerHTML = "Lỗi tạo nội dung.";
-      });
+    document.getElementById('theory').innerHTML = "Đang tạo nội dung...";
+    fetch(SCRIPT_URL + "?topics=" + encodeURIComponent(list.join(", ")))
+        .then(r=>r.json())
+        .then(d=>{
+            document.getElementById('theory').innerHTML =
+                "<h2>Tóm tắt kiến thức</h2>" + d.content.replace(/\n/g,"<br>");
+        })
+        .catch(()=>{
+            document.getElementById('theory').innerHTML = "Lỗi tải dữ liệu";
+        });
 }
 
-
-
 function renderPractice(list){
-    document.getElementById('practice').innerHTML = "<p>Đang tạo câu hỏi ôn tập...</p>";
-
-    fetch("https://script.google.com/macros/s/AKfycbxsjtxVm1K_SHkAGNRxeCicjpiSPmedCi9k8SZvqeJoSlu2qMLjAS7_dCOLEa-jEz5uQg/exec", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            type: "practice",
-            topics: list
-        })
+    document.getElementById('practice').innerHTML = "Đang tạo câu hỏi...";
+    fetch(SCRIPT_URL, {
+        method:"POST",
+        headers:{ "Content-Type":"application/json" },
+        body:JSON.stringify({ type:"practice", topics:list })
     })
-    .then(res => res.json())
-    .then(data => {
+    .then(r=>r.json())
+    .then(d=>{
         document.getElementById('practice').innerHTML =
-            "<h2>Câu hỏi ôn tập</h2><div>" +
-            data.content.replace(/\n/g,"<br>") +
-            "</div>";
+            "<h2>Câu hỏi ôn tập</h2>" + d.content.replace(/\n/g,"<br>");
     })
-    .catch(err => {
-        document.getElementById('practice').innerHTML = "Lỗi tạo câu hỏi.";
+    .catch(()=>{
+        document.getElementById('practice').innerHTML = "Lỗi tải câu hỏi";
     });
 }
 
-
-function renderAdvice(list){
-    document.getElementById('advice').innerHTML=
-    "<h2>Lời khuyên AI</h2><p>Học theo thứ tự, ưu tiên bài hay ra thi, luyện trắc nghiệm mỗi ngày.</p>";
+function renderAdvice(){
+    document.getElementById('advice').innerHTML =
+        "<h2>Lời khuyên AI</h2><p>Ưu tiên chủ đề F, luyện trắc nghiệm hằng ngày, đọc kỹ câu hỏi bẫy.</p>";
 }
 </script>
 
 </body>
 </html>
-
-
-
