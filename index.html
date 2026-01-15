@@ -1,142 +1,362 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="utf-8">
-<title>App ôn tập Tin học với AI</title>
+<meta charset="UTF-8">
+<title>Trợ lý ôn thi TN THPT môn Tin học</title>
 
 <style>
 body{
-    font-family: Arial, sans-serif;
-    background:#f2f2f2;
     margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f5f7fb;
 }
+
+header{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    background:#fff;
+    padding:14px 24px;
+    border-bottom:1px solid #e5e7eb;
+    z-index:1000;
+}
+
+header strong{
+    font-size:18px;
+}
+
+header .subtitle{
+    font-size:12px;
+    color:#666;
+}
+
 .container{
-    width:90%;
     max-width:1100px;
-    margin:20px auto;
+    margin:110px auto 120px;
+    padding:0 16px;
 }
-.header{
-    background:#1976d2;
-    color:white;
-    padding:15px;
-    font-size:22px;
-    text-align:center;
-}
-.main{
+
+.search-box{
     display:flex;
-    gap:20px;
-    margin-top:20px;
+    gap:12px;
+    margin-bottom:20px;
 }
-.panel{
-    background:white;
-    padding:15px;
-    border-radius:6px;
-    box-shadow:0 0 5px rgba(0,0,0,0.2);
+
+.search-box input{
+    flex:1;
+    padding:12px;
+    border-radius:12px;
+    border:1px solid #ddd;
 }
-.left{
-    width:35%;
+
+.counter{
+    background:#eaf1ff;
+    color:#2563eb;
+    padding:10px 16px;
+    border-radius:12px;
+    font-weight:bold;
 }
-.right{
-    width:65%;
+
+.topic{
+    background:#fff;
+    border-radius:16px;
+    margin-bottom:18px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.05);
 }
-button{
-    margin-top:10px;
-    padding:10px 15px;
-    background:#1976d2;
-    color:white;
-    border:none;
-    border-radius:4px;
+
+.topic-header{
+    padding:18px;
+    font-weight:bold;
     cursor:pointer;
 }
-button:hover{
-    background:#125aa0;
+
+.topic-content{
+    padding:18px;
+    border-top:1px solid #eee;
 }
-#output{
-    white-space:pre-wrap;
-    height:420px;
-    overflow:auto;
-    border:1px solid #ccc;
-    padding:10px;
-    background:#fafafa;
+
+.grade{
+    margin-bottom:18px;
 }
-.loading{
-    color:#1976d2;
-    font-style:italic;
+
+.grade-title{
+    font-weight:bold;
+    margin-bottom:8px;
+}
+
+.grade-title button{
+    margin-left:10px;
+    padding:4px 10px;
+    border:none;
+    border-radius:8px;
+    background:#eaf1ff;
+    color:#2563eb;
+    cursor:pointer;
+}
+
+label{
+    display:block;
+    margin:6px 0;
+    cursor:pointer;
+}
+
+.bottom-bar{
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    background:#fff;
+    border-top:1px solid #e5e7eb;
+    padding:12px 20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 -2px 8px rgba(0,0,0,0.08);
+}
+
+.bottom-info{
+    background:#f1f5ff;
+    padding:8px 16px;
+    border-radius:14px;
+}
+
+.start-btn{
+    background:#2563eb;
+    color:#fff;
+    border:none;
+    border-radius:14px;
+    padding:14px 24px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+/* STUDY SCREEN */
+#studyScreen{
+    display:none;
+    margin-top:90px;
+}
+
+.study-header{
+    display:flex;
+    gap:12px;
+    background:#f1f5f9;
+    padding:12px;
+    border-radius:16px;
+    margin:20px;
+}
+
+.tab{
+    flex:1;
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    background:#fff;
+    cursor:pointer;
+    font-weight:bold;
+    color:#64748b;
+}
+
+.tab.active{
+    color:#2563eb;
+    box-shadow:0 2px 6px rgba(0,0,0,0.08);
+}
+
+.study-content{
+    background:#fff;
+    margin:20px;
+    padding:24px;
+    border-radius:20px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.06);
+}
+
+.tab-content{
+    display:none;
+}
+
+.tab-content.active{
+    display:block;
+}
+
+.study-content h2{
+    margin-top:0;
+}
+
+.study-content h3{
+    color:#2563eb;
 }
 </style>
 </head>
 
 <body>
+
+<header>
+<strong>Trợ lý ôn thi TN THPT môn Tin học</strong>
+<div class="subtitle">ÔN THI TỐT NGHIỆP</div>
+</header>
+
 <div class="container">
-    <div class="header">ỨNG DỤNG ÔN TẬP TIN HỌC THPT</div>
 
-    <div class="main">
-        <div class="panel left">
-            <b>Chọn bài học</b><br><br>
-            <label><input type="checkbox"> Tin 10 – Bài 1: Thông tin và dữ liệu</label><br>
-            <label><input type="checkbox"> Tin 10 – Bài 2: Biểu diễn thông tin</label><br>
-            <label><input type="checkbox"> Tin 11 – Python cơ bản</label><br>
-            <label><input type="checkbox"> Tin 12 – Cơ sở dữ liệu</label><br>
+<div class="search-box">
+<input type="text" id="searchInput" placeholder="Tìm bài học (Python, Excel, AI...)">
+<div class="counter">ĐÃ CHỌN <span id="selectedCount">0</span></div>
+</div>
 
-            <button onclick="startStudy()">Bắt đầu ôn tập</button>
-        </div>
+<!-- CHỦ ĐỀ A -->
+<div class="topic">
+<div class="topic-header" onclick="toggleTopic(this)">CHỦ ĐỀ A – Máy tính và xã hội tri thức</div>
+<div class="topic-content">
+<div class="grade">
+<div class="grade-title">LỚP 10 <button onclick="selectAll(this)">TẤT CẢ</button></div>
+<label><input type="checkbox"> Dữ liệu, thông tin và xử lý thông tin</label>
+<label><input type="checkbox"> Lưu trữ, trao đổi và bảo mật thông tin</label>
+<label><input type="checkbox"> Sự ưu việt của máy tính và thành tựu Tin học</label>
+<label><input type="checkbox"> Thực hành sử dụng thiết bị số</label>
+<label><input type="checkbox"> Tin học trong phát triển kinh tế – xã hội</label>
+</div>
 
-        <div class="panel right">
-            <b>Cửa sổ học tập</b>
-            <div id="output">Nội dung ôn tập sẽ hiển thị tại đây...</div>
-        </div>
-    </div>
+<div class="grade">
+<div class="grade-title">LỚP 11 <button onclick="selectAll(this)">TẤT CẢ</button></div>
+<label><input type="checkbox"> Bên trong máy tính</label>
+<label><input type="checkbox"> Khám phá thế giới thiết bị số thông minh</label>
+<label><input type="checkbox"> Khái quát về hệ điều hành</label>
+<label><input type="checkbox"> Hệ điều hành cho thiết bị di động</label>
+<label><input type="checkbox"> Phần mềm ứng dụng và dịch vụ phần mềm</label>
+</div>
+
+<div class="grade">
+<div class="grade-title">LỚP 12 <button onclick="selectAll(this)">TẤT CẢ</button></div>
+<label><input type="checkbox"> Giới thiệu về trí tuệ nhân tạo</label>
+<label><input type="checkbox"> Thành tựu và ứng dụng của AI</label>
+<label><input type="checkbox"> Quan niệm về AI và tương lai</label>
+<label><input type="checkbox"> Cảnh báo về sự lạm dụng AI</label>
+</div>
+</div>
+</div>
+
+<!-- CHỦ ĐỀ F -->
+<div class="topic">
+<div class="topic-header" onclick="toggleTopic(this)">CHỦ ĐỀ F – Giải quyết vấn đề với sự trợ giúp của máy tính</div>
+<div class="topic-content">
+<div class="grade">
+<div class="grade-title">LỚP 10 <button onclick="selectAll(this)">TẤT CẢ</button></div>
+<label><input type="checkbox"> Python: Biến và kiểu dữ liệu</label>
+<label><input type="checkbox"> Câu lệnh rẽ nhánh</label>
+<label><input type="checkbox"> Câu lệnh lặp</label>
+<label><input type="checkbox"> Danh sách</label>
+<label><input type="checkbox"> Hàm và thư viện</label>
+</div>
+
+<div class="grade">
+<div class="grade-title">LỚP 11 <button onclick="selectAll(this)">TẤT CẢ</button></div>
+<label><input type="checkbox"> Cơ sở dữ liệu và hệ quản trị CSDL</label>
+<label><input type="checkbox"> Thiết kế bảng và khóa chính</label>
+<label><input type="checkbox"> Liên kết bảng và khóa ngoại</label>
+<label><input type="checkbox"> Ngôn ngữ SQL cơ bản</label>
+<label><input type="checkbox"> Truy vấn và báo cáo</label>
+</div>
+
+<div class="grade">
+<div class="grade-title">LỚP 12 <button onclick="selectAll(this)">TẤT CẢ</button></div>
+<label><input type="checkbox"> HTML: Cấu trúc trang Web</label>
+<label><input type="checkbox"> Định dạng văn bản và bảng</label>
+<label><input type="checkbox"> Biểu mẫu và siêu liên kết</label>
+<label><input type="checkbox"> CSS: Định dạng giao diện</label>
+<label><input type="checkbox"> Flexbox và Grid</label>
+</div>
+</div>
+</div>
+
+</div>
+
+<div class="bottom-bar">
+<div class="bottom-info">
+<strong>LỘ TRÌNH SẴN SÀNG</strong><br>
+<span id="bottomCount">0</span> bài học đã được nạp
+</div>
+<button class="start-btn" onclick="startStudy()">⚡ BẮT ĐẦU ÔN TẬP</button>
+</div>
+
+<!-- STUDY SCREEN -->
+<div id="studyScreen">
+<div class="study-header">
+<button class="tab active" onclick="switchTab('theory')">📘 Lý thuyết</button>
+<button class="tab" onclick="switchTab('practice')">✍️ Luyện tập</button>
+<button class="tab" onclick="switchTab('advice')">🤖 Lời khuyên AI</button>
+</div>
+
+<div class="study-content">
+<div id="theory" class="tab-content active"></div>
+<div id="practice" class="tab-content"></div>
+<div id="advice" class="tab-content"></div>
+</div>
 </div>
 
 <script>
-async function startStudy(){
-    const output = document.getElementById("output");
-    const selected = [];
+const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+const countSpan = document.getElementById('selectedCount');
+const bottomCount = document.getElementById('bottomCount');
 
-    document.querySelectorAll('input[type="checkbox"]:checked').forEach(cb=>{
-        selected.push(cb.parentElement.textContent.trim());
+function updateCount(){
+    let c = 0;
+    checkboxes.forEach(cb=>{ if(cb.checked) c++; });
+    countSpan.textContent = c;
+    bottomCount.textContent = c;
+}
+checkboxes.forEach(cb=>cb.addEventListener('change',updateCount));
+
+function toggleTopic(h){
+    const c = h.nextElementSibling;
+    c.style.display = c.style.display==="none"?"block":"none";
+}
+
+function selectAll(btn){
+    const boxes = btn.closest('.grade').querySelectorAll('input');
+    const all = [...boxes].every(b=>b.checked);
+    boxes.forEach(b=>b.checked=!all);
+    updateCount();
+}
+
+function startStudy(){
+    const list=[];
+    document.querySelectorAll('input:checked').forEach(cb=>{
+        list.push(cb.parentElement.textContent.trim());
     });
+    if(list.length===0){alert("Chưa chọn bài học");return;}
+    document.querySelector('.container').style.display="none";
+    document.querySelector('.bottom-bar').style.display="none";
+    document.getElementById('studyScreen').style.display="block";
+    renderTheory(list);
+    renderPractice(list);
+    renderAdvice(list);
+}
 
-    if(selected.length === 0){
-        output.innerText = "Vui lòng chọn ít nhất một bài để ôn tập.";
-        return;
-    }
+function switchTab(t){
+    document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+    document.getElementById(t).classList.add('active');
+    event.target.classList.add('active');
+}
 
-    output.innerHTML = '<span class="loading">Đang tạo tài liệu ôn tập, vui lòng chờ...</span>';
+function renderTheory(list){
+    let html="<h2>Tóm tắt kiến thức</h2>";
+    list.forEach(b=>{
+        html+=`<h3>${b}</h3><p>Nội dung trọng tâm, khái niệm và ví dụ minh họa.</p>`;
+    });
+    document.getElementById('theory').innerHTML=html;
+}
 
-    const prompt = `
-Bạn là trợ lý ôn thi TN THPT môn Tin học.
-Hãy tạo tài liệu ôn tập cho các bài sau:
-${selected.join(", ")}
+function renderPractice(list){
+    let html="<h2>Luyện tập</h2>";
+    list.forEach(b=>{
+        html+=`<p>${b}: Câu hỏi trắc nghiệm và bài tập vận dụng.</p>`;
+    });
+    document.getElementById('practice').innerHTML=html;
+}
 
-Trình bày rõ:
-- Kiến thức trọng tâm
-- Lỗi học sinh thường sai
-- Ví dụ ngắn gọn, dễ hiểu
-`;
-
-    const API_KEY = "AIzaSyCxI4WJukZfvITNAeIlNurxFzzhhQtLQdM";
-    const url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" + API_KEY;
-
-    try{
-        const res = await fetch(url,{
-            method:"POST",
-            headers:{ "Content-Type":"application/json" },
-            body:JSON.stringify({
-                contents:[
-                    { parts:[ { text: prompt } ] }
-                ]
-            })
-        });
-
-        const data = await res.json();
-        const text = data.candidates[0].content.parts[0].text;
-        output.innerText = text;
-
-    }catch(e){
-        output.innerText = "Lỗi kết nối Google AI Studio.";
-        console.error(e);
-    }
+function renderAdvice(list){
+    document.getElementById('advice').innerHTML=
+    "<h2>Lời khuyên AI</h2><p>Học theo thứ tự, ưu tiên bài hay ra thi, luyện trắc nghiệm mỗi ngày.</p>";
 }
 </script>
 
