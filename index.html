@@ -82,6 +82,49 @@ label{
     margin:6px 0;
     cursor:pointer;
 }
+    .bottom-bar{
+    position:fixed;
+    left:0;
+    right:0;
+    bottom:0;
+    background:#ffffff;
+    border-top:1px solid #e5e7eb;
+    box-shadow:0 -2px 8px rgba(0,0,0,0.06);
+    padding:12px 20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    z-index:999;
+}
+
+.bottom-info{
+    background:#f1f5ff;
+    padding:8px 14px;
+    border-radius:12px;
+}
+
+.bottom-info .title{
+    font-size:12px;
+    color:#2563eb;
+    font-weight:bold;
+}
+
+.bottom-info .count{
+    font-size:14px;
+    font-weight:bold;
+}
+
+.start-btn{
+    background:#2563eb;
+    color:#fff;
+    border:none;
+    border-radius:14px;
+    padding:12px 22px;
+    font-size:14px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
 </style>
 </head>
 
@@ -167,6 +210,13 @@ label{
 </div>
 
 </div>
+<div class="bottom-bar">
+    <div class="bottom-info">
+        <div class="title">LỘ TRÌNH SẴN SÀNG</div>
+        <div class="count"><span id="bottomCount">0</span> bài học đã được nạp</div>
+    </div>
+    <button class="start-btn" onclick="startStudy()">⚡ BẮT ĐẦU ÔN TẬP</button>
+</div>
 
 <script>
 const checkboxes = document.querySelectorAll('input[type="checkbox"]');
@@ -199,7 +249,25 @@ searchInput.addEventListener('input', function(){
         lb.style.display = lb.textContent.toLowerCase().includes(key) ? 'block' : 'none';
     });
 });
+    const bottomCount = document.getElementById('bottomCount');
+
+function updateCount(){
+    let count = 0;
+    checkboxes.forEach(cb => { if(cb.checked) count++; });
+    countSpan.textContent = count;
+    bottomCount.textContent = count;
+}
+
+function startStudy(){
+    if(parseInt(bottomCount.textContent) === 0){
+        alert("Chưa chọn bài học nào để ôn tập");
+        return;
+    }
+    alert("Đã nạp " + bottomCount.textContent + " bài học. Sẵn sàng ôn tập!");
+}
+
 </script>
 
 </body>
 </html>
+
