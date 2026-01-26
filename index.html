@@ -320,12 +320,16 @@ function renderTheory(list) {
     const url = SCRIPT_URL + "?type=theory&topics=" + encodeURIComponent(list.join(", "));
 
     fetch(url)
-        .then(r => r.text())     // ✅ ĐÚNG: đọc TEXT
+        .then(r => {
+            if (!r.ok) throw new Error("Mạng có vấn đề");
+            return r.text();
+        })
         .then(t => {
+            // Nếu backend trả về text thuần túy
             box.innerHTML = "<h2>📘 Tóm tắt kiến thức</h2>" + t.replace(/\n/g,"<br>");
         })
         .catch(err => {
-            box.innerHTML = "❌ Lỗi tải lý thuyết";
+            box.innerHTML = "❌ Lỗi tải lý thuyết. Chi tiết: " + err.message;
             console.error(err);
         });
 }
@@ -365,3 +369,4 @@ function switchTab(e,id){
 
 </body>
 </html>
+
