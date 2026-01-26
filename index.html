@@ -294,9 +294,7 @@ function selectAll(btn){
 function startStudy() {
     const list = [];
     document.querySelectorAll('input[type="checkbox"]:checked').forEach(cb => {
-        // Lấy text của label bỏ qua checkbox
-        let text = cb.parentElement.innerText || cb.parentElement.textContent;
-        list.push(text.trim());
+        list.push(cb.parentElement.innerText.trim());
     });
 
     if (list.length === 0) {
@@ -314,42 +312,56 @@ function startStudy() {
     renderAdvice();
 }
 
+/* ===== FIX LỖI Ở ĐÂY ===== */
 function renderTheory(list) {
-    document.getElementById('theory').innerHTML = "⏳ Đang tải lý thuyết...";
-    const url = SCRIPT_URL + "?topics=" + encodeURIComponent(list.join(", "));
-    
+    const box = document.getElementById('theory');
+    box.innerHTML = "⏳ Đang tải lý thuyết...";
+
+    const url = SCRIPT_URL + "?type=theory&topics=" + encodeURIComponent(list.join(", "));
+
     fetch(url)
-        .then(r => r.json())
-        .then(d => {
-            document.getElementById('theory').innerHTML = "<h2>📘 Tóm tắt kiến thức</h2>" + (d.content ? d.content.replace(/\n/g, "<br>") : d.error);
+        .then(r => r.text())     // ✅ ĐÚNG: đọc TEXT
+        .then(t => {
+            box.innerHTML = "<h2>📘 Tóm tắt kiến thức</h2>" + t.replace(/\n/g,"<br>");
         })
-        .catch(() => document.getElementById('theory').innerHTML = "❌ Lỗi tải lý thuyết");
+        .catch(err => {
+            box.innerHTML = "❌ Lỗi tải lý thuyết";
+            console.error(err);
+        });
 }
 
 function renderPractice(list) {
-    document.getElementById('practice').innerHTML = "⏳ Đang tạo câu hỏi...";
-    
+    const box = document.getElementById('practice');
+    box.innerHTML = "⏳ Đang tạo câu hỏi...";
+
     fetch(SCRIPT_URL, {
         method: "POST",
-        headers: { "Content-Type": "text/plain" }, // BẮT BUỘC: Để tránh lỗi 405 Preflight
-        body: JSON.stringify({ topics: list })
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify({ type:"practice", topics: list })
     })
-    .then(r => r.json())
-    .then(d => {
-        document.getElementById('practice').innerHTML = "<h2>✍️ Câu hỏi luyện tập</h2>" + (d.content ? d.content.replace(/\n/g, "<br>") : d.error);
+    .then(r => r.text())
+    .then(t => {
+        box.innerHTML = "<h2>✍️ Câu hỏi luyện tập</h2>" + t.replace(/\n/g,"<br>");
     })
-    .catch(() => document.getElementById('practice').innerHTML = "❌ Lỗi tải câu hỏi");
+    .catch(err => {
+        box.innerHTML = "❌ Lỗi tải câu hỏi";
+        console.error(err);
+    });
 }
 
 function renderAdvice(){
     document.getElementById('advice').innerHTML =
-        "<h2>Lời khuyên AI</h2><p>Ưu tiên chủ đề F, luyện trắc nghiệm hằng ngày, đọc kỹ câu hỏi bẫy.</p>";
+        "<h2>🤖 Lời khuyên AI</h2><p>Ưu tiên chủ đề F, luyện trắc nghiệm hằng ngày, chú ý câu hỏi bẫy.</p>";
+}
+
+function switchTab(e,id){
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    e.target.classList.add('active');
+
+    document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
 }
 </script>
 
 </body>
 </html>
-
-
-
-
