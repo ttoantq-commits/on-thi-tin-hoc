@@ -313,43 +313,41 @@ function startStudy() {
 }
 
 /* ===== FIX LỖI Ở ĐÂY ===== */
+/* Sửa hàm renderTheory để khớp với doGet của bạn */
 function renderTheory(list) {
     const box = document.getElementById('theory');
-    box.innerHTML = "⏳ Đang tải lý thuyết...";
+    box.innerHTML = "⏳ AI đang soạn lý thuyết...";
 
-    const url = SCRIPT_URL + "?type=theory&topics=" + encodeURIComponent(list.join(", "));
+    // Gọi đến doGet của Script
+    const url = SCRIPT_URL + "?topics=" + encodeURIComponent(list.join(", "));
 
     fetch(url)
-        .then(r => {
-            if (!r.ok) throw new Error("Mạng có vấn đề");
-            return r.text();
-        })
+        .then(r => r.text())
         .then(t => {
-            // Nếu backend trả về text thuần túy
-            box.innerHTML = "<h2>📘 Tóm tắt kiến thức</h2>" + t.replace(/\n/g,"<br>");
+            if (t.startsWith("Lỗi:")) throw new Error(t);
+            box.innerHTML = "<h2>📘 Tóm tắt từ AI</h2>" + t.replace(/\n/g,"<br>");
         })
         .catch(err => {
-            box.innerHTML = "❌ Lỗi tải lý thuyết. Chi tiết: " + err.message;
-            console.error(err);
+            box.innerHTML = "❌ Lỗi: " + err.message;
         });
 }
 
+/* Sửa hàm renderPractice để khớp với doPost của bạn */
 function renderPractice(list) {
     const box = document.getElementById('practice');
-    box.innerHTML = "⏳ Đang tạo câu hỏi...";
+    box.innerHTML = "⏳ AI đang tạo câu hỏi...";
 
     fetch(SCRIPT_URL, {
         method: "POST",
-        headers: { "Content-Type": "text/plain" },
-        body: JSON.stringify({ type:"practice", topics: list })
+        body: JSON.stringify({ topics: list }) // Gửi object chứa topics
     })
     .then(r => r.text())
     .then(t => {
+        if (t.startsWith("Lỗi:")) throw new Error(t);
         box.innerHTML = "<h2>✍️ Câu hỏi luyện tập</h2>" + t.replace(/\n/g,"<br>");
     })
     .catch(err => {
-        box.innerHTML = "❌ Lỗi tải câu hỏi";
-        console.error(err);
+        box.innerHTML = "❌ Lỗi: " + err.message;
     });
 }
 
@@ -369,6 +367,7 @@ function switchTab(e,id){
 
 </body>
 </html>
+
 
 
 
